@@ -1,26 +1,27 @@
-import 'package:flutter_web/material.dart';
+import 'dart:html' as html;
+
+import 'package:flutter/material.dart';
 import 'package:portfolio/constants/assets.dart';
+import 'package:portfolio/constants/colors.dart';
 import 'package:portfolio/constants/fonts.dart';
 import 'package:portfolio/constants/strings.dart';
 import 'package:portfolio/constants/text_styles.dart';
 import 'package:portfolio/models/education.dart';
 import 'package:portfolio/utils/screen/screen_utils.dart';
 import 'package:portfolio/widgets/responsive_widget.dart';
-import 'dart:html' as html;
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color(0xFFF7F8FA),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: (ScreenUtil.getInstance().setWidth(108))), //144
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: _buildAppBar(context),
-          drawer: _buildDrawer(context),
-          body: LayoutBuilder(builder: (context, constraints) {
+      color: AppColors.background,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(context),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: ScreenUtil.getInstance().setWidth(48)),
+          child: LayoutBuilder(builder: (context, constraints) {
             return _buildBody(context, constraints);
           }),
         ),
@@ -32,76 +33,18 @@ class HomePage extends StatelessWidget {
   Widget _buildAppBar(BuildContext context) {
     return AppBar(
       titleSpacing: 0.0,
-      title: _buildTitle(),
+      centerTitle: true,
+      title: _buildTitle(context),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-      actions:
-          !ResponsiveWidget.isSmallScreen(context) ? _buildActions() : null,
     );
   }
 
-  Widget _buildTitle() {
-    return RichText(
-      text: TextSpan(
-        // Note: Styles for TextSpans must be explicitly defined.
-        // Child text spans will inherit styles from parent
-        style: TextStyle(
-          fontSize: 14.0,
-          color: Colors.black,
-        ),
-        children: <TextSpan>[
-          TextSpan(
-            text: Strings.portfoli,
-            style: TextStyles.logo,
-          ),
-          TextSpan(
-            text: Strings.o,
-            style: TextStyles.logo.copyWith(
-              color: Color(0xFF50AFC0),
-            ),
-          ),
-        ],
-      ),
+  Widget _buildTitle(BuildContext context) {
+    return Image.network(
+      Assets.twitter,
+      height: ScreenUtil.getInstance().setHeight(80), //480.0
     );
-  }
-
-  List<Widget> _buildActions() {
-    return <Widget>[
-      MaterialButton(
-        child: Text(
-          Strings.menu_home,
-          style: TextStyles.menu_item.copyWith(
-            color: Color(0xFF50AFC0),
-          ),
-        ),
-        onPressed: () {},
-      ),
-      MaterialButton(
-        child: Text(
-          Strings.menu_about,
-          style: TextStyles.menu_item,
-        ),
-        onPressed: () {},
-      ),
-      MaterialButton(
-        child: Text(
-          Strings.menu_contact,
-          style: TextStyles.menu_item,
-        ),
-        onPressed: () {},
-      ),
-    ];
-  }
-
-  Widget _buildDrawer(BuildContext context) {
-    return ResponsiveWidget.isSmallScreen(context)
-        ? Drawer(
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              children: _buildActions(),
-            ),
-          )
-        : null;
   }
 
   //Screen Methods:-------------------------------------------------------------
@@ -147,9 +90,10 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: Row(
+            child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
+                _buildIllustration(),
                 Expanded(flex: 1, child: _buildContent(context)),
               ],
             ),
@@ -163,10 +107,9 @@ class HomePage extends StatelessWidget {
   Widget _buildSmallScreen(BuildContext context) {
     return IntrinsicHeight(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          _buildIllustration(),
           Expanded(flex: 1, child: _buildContent(context)),
-          Divider(),
           _buildCopyRightText(context),
           SizedBox(
               height: ResponsiveWidget.isSmallScreen(context) ? 12.0 : 0.0),
@@ -181,9 +124,7 @@ class HomePage extends StatelessWidget {
   // Body Methods:--------------------------------------------------------------
   Widget _buildIllustration() {
     return Image.network(
-      Assets.programmer3,
-      height: ScreenUtil.getInstance().setWidth(345), //480.0
-    );
+        Assets.logo);
   }
 
   Widget _buildContent(BuildContext context) {
@@ -204,9 +145,7 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _buildEducation(),
-                  SizedBox(height: 24.0),
-                  _buildSkills(context),
+                  _buildProjects(),
                 ],
               )
             : _buildSkillsAndEducation(context)
@@ -221,7 +160,7 @@ class HomePage extends StatelessWidget {
         // Child text spans will inherit styles from parent
         style: TextStyle(
           fontSize: 14.0,
-          color: Colors.black,
+          color: AppColors.primary,
         ),
         children: <TextSpan>[
           TextSpan(
@@ -234,7 +173,7 @@ class HomePage extends StatelessWidget {
           TextSpan(
             text: Strings.me,
             style: TextStyles.heading.copyWith(
-              color: Color(0xFF50AFC0),
+              color: AppColors.secondary,
               fontSize: ResponsiveWidget.isSmallScreen(context) ? 36 : 45.0,
             ),
           ),
@@ -268,144 +207,57 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: _buildEducation(),
-        ),
-        SizedBox(width: 40.0),
-        Expanded(
-          flex: 1,
-          child: _buildSkills(context),
+          child: _buildProjects(),
         ),
       ],
-    );
-  }
-
-  // Skills Methods:------------------------------------------------------------
-  final skills = [
-    'Java',
-    'Kotlin',
-    'Dart',
-    'Flutter',
-    'Android',
-    'iOS',
-    'Xamarin',
-    'Reactive Programming',
-    'Jenkins',
-    'Photoshop',
-    'JFrog Atrtifactory',
-    'Code Magic',
-  ];
-
-  Widget _buildSkills(BuildContext context) {
-    final List<Widget> widgets = skills
-        .map((skill) => Padding(
-              padding: EdgeInsets.only(right: 8.0),
-              child: _buildSkillChip(context, skill),
-            ))
-        .toList();
-
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        _buildSkillsContainerHeading(),
-        Wrap(children: widgets),
-//        _buildNavigationArrows(),
-      ],
-    );
-  }
-
-  Widget _buildSkillsContainerHeading() {
-    return Text(
-      Strings.skills_i_have,
-      style: TextStyles.sub_heading,
-    );
-  }
-
-  Widget _buildSkillChip(BuildContext context, String label) {
-    return Chip(
-      label: Text(
-        label,
-        style: TextStyles.chip.copyWith(
-          fontSize: ResponsiveWidget.isSmallScreen(context) ? 10.0 : 11.0,
-        ),
-      ),
     );
   }
 
   // Education Methods:---------------------------------------------------------
   final educationList = [
-    Education(
-      'Apr 2018',
-      'Present',
-      'Embrace-it Pakistan',
-      'Sr. Software Engineer',
-    ),
-    Education(
-      'Apr 2016',
-      'Apr 2018',
-      'TEO International',
-      'Sr. Software Engineer',
-    ),
-    Education(
-      'July 2014',
-      'March 2016',
-      'Citrusbits',
-      'Software Engineer',
+    Project(
+      'Untitled',
+      'Something we\'re about to make',
+      '2022',
     ),
   ];
 
-  Widget _buildEducation() {
+  Widget _buildProjects() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildEducationContainerHeading(),
-        _buildEducationSummary(),
-        SizedBox(height: 8.0),
-        _buildEducationTimeline(),
+        _buildProjectsTimeline(),
       ],
     );
   }
 
-  Widget _buildEducationContainerHeading() {
-    return Text(
-      Strings.experience,
-      style: TextStyles.sub_heading,
-    );
-  }
-
-  Widget _buildEducationSummary() {
-    return Text(
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      style: TextStyles.body,
-    );
-  }
-
-  Widget _buildEducationTimeline() {
-    final List<Widget> widgets = educationList
-        .map((education) => _buildEducationTile(education))
-        .toList();
+  Widget _buildProjectsTimeline() {
+    final List<Widget> widgets =
+        educationList.map((education) => _buildProjectTile(education)).toList();
     return Column(children: widgets);
   }
 
-  Widget _buildEducationTile(Education education) {
+  Widget _buildProjectTile(Project education) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Text(
-            '${education.post}',
+            '${education.title}',
             style: TextStyles.company,
           ),
           Text(
-            '${education.organization}',
+            '${education.shortDescription}',
             style: TextStyles.body.copyWith(
-              color: Color(0xFF45405B),
+              color: AppColors.primaryLight,
             ),
           ),
           Text(
-            '${education.from}-${education.to}',
-            style: TextStyles.body,
+            '${education.date}',
+            style: TextStyles.body1.copyWith(
+              color: AppColors.secondary,
+            ),
           ),
         ],
       ),
@@ -416,7 +268,6 @@ class HomePage extends StatelessWidget {
   Widget _buildFooter(BuildContext context) {
     return Column(
       children: <Widget>[
-        Divider(),
         Padding(
           padding: EdgeInsets.all(12.0),
           child: Row(
@@ -439,10 +290,18 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildCopyRightText(BuildContext context) {
-    return Text(
-      Strings.rights_reserved,
-      style: TextStyles.body1.copyWith(
-        fontSize: ResponsiveWidget.isSmallScreen(context) ? 8 : 10.0,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          html.window.open("https://www.mhksoft.com/", "_blank");
+        },
+        child: Text(
+          Strings.rights_reserved,
+          style: TextStyles.body1.copyWith(
+            fontSize: ResponsiveWidget.isSmallScreen(context) ? 8 : 10.0,
+          ),
+        ),
       ),
     );
   }
@@ -452,52 +311,65 @@ class HomePage extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            html.window
-                .open("https://www.linkedin.com/in/zubairehman/", "LinkedIn");
-          },
-          child: Image.network(
-            Assets.linkedin,
-            color: Color(0xFF45405B),
-            height: 20.0,
-            width: 20.0,
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              html.window
+                  .open("https://www.linkedin.com/in/lemonica/", "LinkedIn");
+            },
+            child: Image.network(
+              Assets.linkedin,
+              color: Color(0xFF45405B),
+              height: 20.0,
+              width: 20.0,
+            ),
           ),
         ),
         SizedBox(width: 16.0),
-        GestureDetector(
-          onTap: () {
-            html.window.open("https://medium.com/@zubairehman.work", "Medium");
-          },
-          child: Image.network(
-            Assets.evernote,
-            color: Color(0xFF45405B),
-            height: 20.0,
-            width: 20.0,
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              html.window.open("https://medium.com/lemonica/", "Medium");
+            },
+            child: Image.network(
+              Assets.evernote,
+              color: Color(0xFF45405B),
+              height: 20.0,
+              width: 20.0,
+            ),
           ),
         ),
         SizedBox(width: 16.0),
-        GestureDetector(
-          onTap: () {
-            html.window.open("https://github.com/zubairehman", "Github");
-          },
-          child: Image.network(
-            Assets.google,
-            color: Color(0xFF45405B),
-            height: 20.0,
-            width: 20.0,
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              html.window.open(
+                  "https://www.instagram.com/team.lemonica/", "Instagram");
+            },
+            child: Image.network(
+              Assets.google,
+              color: Color(0xFF45405B),
+              height: 20.0,
+              width: 20.0,
+            ),
           ),
         ),
         SizedBox(width: 16.0),
-        GestureDetector(
-          onTap: () {
-            html.window.open("https://twitter.com/zubair340", "Twitter");
-          },
-          child: Image.network(
-            Assets.twitter,
-            color: Color(0xFF45405B),
-            height: 20.0,
-            width: 20.0,
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              html.window.open("https://twitter.com/lemonica/", "Twitter");
+            },
+            child: Image.network(
+              Assets.twitter,
+              color: Color(0xFF45405B),
+              height: 20.0,
+              width: 20.0,
+            ),
           ),
         ),
       ],

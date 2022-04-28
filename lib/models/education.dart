@@ -1,8 +1,7 @@
-class Education {
-  String from;
-  String to;
-  String organization;
-  String post;
+class Project {
+  String title;
+  String shortDescription;
+  String date;
 
-  Education(this.from, this.to, this.organization, this.post);
+  Project(this.title, this.shortDescription, this.date);
 }

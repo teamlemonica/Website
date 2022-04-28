@@ -131,7 +131,7 @@ widgets/
 This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
 
 ```
-import 'package:flutter_web/material.dart';
+import 'package:flutter/material.dart';
 import 'package:portfolio/ui/home.dart';
 
 import 'package:portfolio/utils/screen/screen_utils.dart';
