@@ -15,35 +15,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: _buildAppBar(context),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtil.getInstance().setWidth(48)),
-          child: LayoutBuilder(builder: (context, constraints) {
-            return _buildBody(context, constraints);
-          }),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: ScreenUtil.getInstance().setWidth(48),
+            vertical: ScreenUtil.getInstance().setHeight(16)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              return _buildBody(context, constraints);
+            },
+          ),
         ),
       ),
-    );
-  }
-
-  //AppBar Methods:-------------------------------------------------------------
-  Widget _buildAppBar(BuildContext context) {
-    return AppBar(
-      titleSpacing: 0.0,
-      centerTitle: true,
-      title: _buildTitle(context),
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
-    );
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    return Image.network(
-      Assets.twitter,
-      height: ScreenUtil.getInstance().setHeight(80), //480.0
     );
   }
 
@@ -124,7 +108,11 @@ class HomePage extends StatelessWidget {
   // Body Methods:--------------------------------------------------------------
   Widget _buildIllustration() {
     return Image.network(
-        Assets.logo);
+      Assets.animation,
+      width: ScreenUtil.getInstance().setWidth(360),
+      gaplessPlayback: true,
+      repeat: ImageRepeat.repeat,
+    );
   }
 
   Widget _buildContent(BuildContext context) {
@@ -315,27 +303,12 @@ class HomePage extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              html.window
-                  .open("https://www.linkedin.com/in/lemonica/", "LinkedIn");
+              html.window.open(
+                  "https://www.linkedin.com/company/teamlemonica/", "LinkedIn");
             },
             child: Image.network(
               Assets.linkedin,
-              color: Color(0xFF45405B),
-              height: 20.0,
-              width: 20.0,
-            ),
-          ),
-        ),
-        SizedBox(width: 16.0),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              html.window.open("https://medium.com/lemonica/", "Medium");
-            },
-            child: Image.network(
-              Assets.evernote,
-              color: Color(0xFF45405B),
+              color: AppColors.primaryLight,
               height: 20.0,
               width: 20.0,
             ),
@@ -350,8 +323,8 @@ class HomePage extends StatelessWidget {
                   "https://www.instagram.com/team.lemonica/", "Instagram");
             },
             child: Image.network(
-              Assets.google,
-              color: Color(0xFF45405B),
+              Assets.instagram,
+              color: AppColors.primaryLight,
               height: 20.0,
               width: 20.0,
             ),
@@ -362,11 +335,11 @@ class HomePage extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              html.window.open("https://twitter.com/lemonica/", "Twitter");
+              html.window.open("https://twitter.com/teamlemonica/", "Twitter");
             },
             child: Image.network(
               Assets.twitter,
-              color: Color(0xFF45405B),
+              color: AppColors.primaryLight,
               height: 20.0,
               width: 20.0,
             ),
