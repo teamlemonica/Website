@@ -204,9 +204,9 @@ class HomePage extends StatelessWidget {
   // Education Methods:---------------------------------------------------------
   final educationList = [
     Project(
-      'Untitled',
-      'Something we\'re about to make',
-      '2022',
+      'Upcoming Projects',
+      'Coming soon!',
+      'TBD',
     ),
   ];
 
