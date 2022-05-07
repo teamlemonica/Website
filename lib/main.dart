@@ -1,6 +1,6 @@
+import 'package:Lemonica/ui/home.dart';
+import 'package:Lemonica/utils/screen/screen_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/ui/home.dart';
-import 'package:portfolio/utils/screen/screen_utils.dart';
 
 void main() {
   runApp(MyApp());

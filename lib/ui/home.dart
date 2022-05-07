@@ -1,14 +1,14 @@
 import 'dart:html' as html;
 
+import 'package:Lemonica/constants/assets.dart';
+import 'package:Lemonica/constants/colors.dart';
+import 'package:Lemonica/constants/fonts.dart';
+import 'package:Lemonica/constants/strings.dart';
+import 'package:Lemonica/constants/text_styles.dart';
+import 'package:Lemonica/models/project.dart';
+import 'package:Lemonica/utils/screen/screen_utils.dart';
+import 'package:Lemonica/widgets/responsive_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/constants/assets.dart';
-import 'package:portfolio/constants/colors.dart';
-import 'package:portfolio/constants/fonts.dart';
-import 'package:portfolio/constants/strings.dart';
-import 'package:portfolio/constants/text_styles.dart';
-import 'package:portfolio/models/education.dart';
-import 'package:portfolio/utils/screen/screen_utils.dart';
-import 'package:portfolio/widgets/responsive_widget.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -109,7 +109,6 @@ class HomePage extends StatelessWidget {
   Widget _buildIllustration() {
     return Image.network(
       Assets.animation,
-      width: ScreenUtil.getInstance().setWidth(360),
       gaplessPlayback: true,
       repeat: ImageRepeat.repeat,
     );
