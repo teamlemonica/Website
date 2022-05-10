@@ -206,7 +206,7 @@ class HomePage extends StatelessWidget {
     Project(
       'Upcoming Projects',
       'Coming soon!',
-      'TBD',
+      'TBA',
     ),
   ];
 
