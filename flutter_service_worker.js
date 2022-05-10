@@ -14,15 +14,11 @@ const RESOURCES = {
 "assets/icons/ic_twitter.png": "24997222db1c1b78b1b8b0df9d345c3c",
 "assets/images/lemonica.gif": "4a9339c2d92d2f588723026d724ffd8a",
 "assets/NOTICES": "61f7b935fa56478ee722b79a5761c688",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "CNAME": "f0e7965761e51ed30c575d8c01ad07a9",
 "favicon.ico": "f2a84e6fcb2e9f9b6e408c3dbd6a55c8",
 "index.html": "501bfa1d4932d135e1b3925ca459eac4",
 "/": "501bfa1d4932d135e1b3925ca459eac4",
-"main.dart.js": "fa2cc1f4e250c829d19cdbece1978b6b",
+"main.dart.js": "f83753a8ac5777e38cdae71929eb54dc",
 "version.json": "933aaca7e64db6663bbf76c33a443d75"
 };
 
