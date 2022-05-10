@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Expanded(flex: 1, child: _buildContent(context)),
-                _buildIllustration(),
+                _buildIllustration(MediaQuery.of(context).size.width / 3),
               ],
             ),
           ),
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                _buildIllustration(),
+                _buildIllustration(MediaQuery.of(context).size.width / 3),
                 Expanded(flex: 1, child: _buildContent(context)),
               ],
             ),
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
     return IntrinsicHeight(
       child: Column(
         children: <Widget>[
-          _buildIllustration(),
+          _buildIllustration(MediaQuery.of(context).size.width),
           Expanded(flex: 1, child: _buildContent(context)),
           _buildCopyRightText(context),
           SizedBox(
@@ -106,11 +106,12 @@ class HomePage extends StatelessWidget {
   }
 
   // Body Methods:--------------------------------------------------------------
-  Widget _buildIllustration() {
+  Widget _buildIllustration(double width) {
     return Image.network(
       Assets.animation,
       gaplessPlayback: true,
       repeat: ImageRepeat.repeat,
+      width: width,
     );
   }
 
